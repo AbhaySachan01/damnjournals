@@ -1,77 +1,59 @@
 import React from 'react';
-import { FaInstagram, FaFacebookF, FaEnvelope, FaHeart } from "react-icons/fa"; 
+import { FaInstagram, FaFacebookF, FaHeart } from "react-icons/fa"; 
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    // Added border-top for a premium look
-    <footer className="bg-[#2F4F4F] text-white pt-20 pb-10 mt-auto border-t-4 border-[#DAA520]">
-      <div className="container mx-auto px-6 flex flex-col items-center justify-center text-center">
+    <footer className="bg-[#2F4F4F] text-white border-t-4 border-[#DAA520]">
+      {/* Container: Vertical padding kam kar di (py-8) */}
+      <div className="max-w-7xl mx-auto px-6 py-10">
         
-        {/* 1. Brand Name */}
-        <h2 className="text-4xl md:text-5xl font-serif tracking-[0.2em] mb-3 uppercase text-white">
-          Damn Journals
-        </h2>
-        
-        {/* 2. Tagline (Gold Color) */}
-        <p className="text-[#DAA520] font-serif italic text-lg md:text-xl mb-8">
-          "Where Ink Meets Soul"
-        </p>
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-0">
+          
+          {/* --- LEFT SIDE: BRAND & TAGLINE --- */}
+          <div className="text-center md:text-left">
+            <h2 className="text-2xl md:text-3xl font-serif tracking-[0.2em] uppercase text-white mb-1">
+              Damn Journals
+            </h2>
+            <p className="text-[#DAA520] font-serif italic text-sm md:text-base">
+              "Where Ink Meets Soul"
+            </p>
+          </div>
 
-        {/* 3. The "Mast Wala" Text (Soulful Description) */}
-        <div className="max-w-2xl mx-auto mb-10">
-          <p className="text-gray-300 text-sm md:text-base leading-loose font-light tracking-wide">
-            We don't just sell paper; we craft keepers of secrets. 
-            Handbound with patience and wrapped in Indian heritage, our journals are waiting for your story. 
-            Whether it's a sketch, a poem, or a midnight thought—give it a home it deserves.
-          </p>
+          {/* --- CENTER: QUICK LINKS (Optional but looks good) --- */}
+          <div className="flex gap-6 text-xs font-bold tracking-widest text-gray-400 uppercase">
+            <Link to="/" className="hover:text-white transition">Home</Link>
+            <Link to="/journals" className="hover:text-white transition">Shop</Link>
+            <Link to="/blogs" className="hover:text-white transition">Story</Link>
+          </div>
+
+          {/* --- RIGHT SIDE: SOCIAL ICONS --- */}
+          <div className="flex gap-6">
+            <a 
+              href="https://www.instagram.com/damnjournals/" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-[#DAA520] transition-all duration-300 transform hover:scale-110"
+            >
+              <FaInstagram size={24} />
+            </a>
+            <a 
+              href="https://facebook.com" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-300 hover:text-[#DAA520] transition-all duration-300 transform hover:scale-110"
+            >
+              <FaFacebookF size={20} />
+            </a>
+          </div>
         </div>
 
-        {/* Divider Line */}
-        <div className="w-16 h-[1px] bg-gray-500 mb-10"></div>
-
-        {/* 4. Social Icons */}
-        <div className="flex gap-8 mb-10 items-center">
+        {/* --- BOTTOM: DIVIDER & COPYRIGHT --- */}
+        <div className="border-t border-gray-600/30 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-400 tracking-widest uppercase">
+          <p>&copy; {new Date().getFullYear()} DAMN JOURNALS.</p>
           
-          {/* Instagram */}
-          <a 
-            href="https://www.instagram.com/damnjournals/" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-300 hover:text-[#DAA520] transition-all duration-300 transform hover:scale-125 hover:-translate-y-1"
-            title="Follow us on Instagram"
-          >
-            <FaInstagram size={28} />
-          </a>
-          
-          {/* Facebook */}
-          <a 
-            href="https://facebook.com" 
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-300 hover:text-[#DAA520] transition-all duration-300 transform hover:scale-125 hover:-translate-y-1"
-            title="Join us on Facebook"
-          >
-            <FaFacebookF size={24} />
-          </a>
-
-          {/* Mail Icon (New Addition)
-          <a 
-            href="mailto:hello@damnjournals.com" 
-            className="text-gray-300 hover:text-[#DAA520] transition-all duration-300 transform hover:scale-125 hover:-translate-y-1"
-            title="Email Us"
-          >
-            <FaEnvelope size={26} />
-          </a> */}
-
-        </div>
-
-        {/* 5. Copyright with a tiny heart */}
-        <div className="flex flex-col gap-2">
-          <p className="text-[10px] md:text-xs text-gray-500 tracking-[0.2em] uppercase font-sans">
-            &copy; {new Date().getFullYear()} DAMN JOURNALS. ALL RIGHTS RESERVED.
-          </p>
-          <p className="text-[10px] text-gray-600 flex items-center justify-center gap-1">
-            Made with <FaHeart size={10} className="text-red-500" /> in India
+          <p className="flex items-center gap-1 mt-2 md:mt-0">
+            Made with <FaHeart size={10} className="text-[#DAA520]" /> in India
           </p>
         </div>
 

@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout'; // Layout import kiya
+import Layout from './components/Layout';
 import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
 import Cart from './pages/Cart';
+import ProductDetails from './pages/ProductDetails'; // <--- 1. Import New Page
 import { CartProvider } from './context/CartContext';
 
 function App() {
@@ -11,9 +12,12 @@ function App() {
     <CartProvider>
       <Router>
         <Routes>
-          {/* Layout sab pages ke upar wrap ho jayega */}
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            
+            {/* 2. New Route for Single Product */}
+            <Route path="product/:id" element={<ProductDetails />} />
+            
             <Route path="journals" element={<CategoryPage category="journals" title="Handcrafted Journals" />} />
             <Route path="keychains" element={<CategoryPage category="keychains" title="Keychains" />} />
             <Route path="blogs" element={<CategoryPage category="blogs" title="Our Blogs" />} />

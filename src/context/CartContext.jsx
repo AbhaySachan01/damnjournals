@@ -67,7 +67,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const checkoutViaWhatsApp = () => {
-    const phoneNumber = "919876543210"; 
+    const phoneNumber = "919713631331"; 
     
     if(cart.length === 0) {
       toast.error("Your cart is empty!");
