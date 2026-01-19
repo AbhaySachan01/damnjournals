@@ -1,10 +1,9 @@
 import React from 'react';
-import { products } from '../data'; // डेटा यहाँ से आ रहा है
+import { products } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
-  // सिर्फ वो products निकालो जो 'featured: true' हैं
   const featuredProducts = products.filter(product => product.featured);
 
   return (
@@ -14,8 +13,8 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col-reverse md:flex-row items-center gap-12">
           
           <div className="md:w-1/2 text-center md:text-left">
-            <h2 className="text-4xl md:text-6xl font-serif text-[#2F4F4F] mb-6 leading-tight">
-              Where Hands Craft, <br/> and Hearts Write
+             <h2 className="text-4xl md:text-4xl font-serif text-[#2F4F4F] mb-6 leading-tight">
+             Handcrafted Luxury Journals made in India for mindful Writing and Journaling
             </h2>
             <p className="text-gray-500 mb-8 text-base md:text-lg leading-relaxed max-w-md mx-auto md:mx-0">
               Meticulously handcrafted by skilled artisans, our journals embody the elegance of Indian heritage.
@@ -46,7 +45,7 @@ const Home = () => {
         </div>
 
         {/* Featured Items Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {featuredProducts.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}

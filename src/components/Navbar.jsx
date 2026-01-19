@@ -1,40 +1,86 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 
 const Navbar = () => {
-  // FIX: Yahan humne 'cart' ki jagah 'getCartCount' nikala hai context se
   const { getCartCount } = useCart(); 
-  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  // Ab ye function available hai call karne ke liye
   const cartCount = getCartCount();
+  
+  const location = useLocation();
+
+  // --- CHANGE IS HERE ---
+  // In pages ki list bana li jahan Green Nav dikhana hai
+  const greenPages = ['/', '/artworks', '/our-story','/cart'];
+  
+  // Check karein agar current page list me hai
+  const isDarkNav = greenPages.includes(location.pathname);
+
+  // --- STYLES CONFIG (ab 'isDarkNav' use karenge) ---
+  const navBgClass = isDarkNav ? "bg-[#2F4F4F] border-[#DAA520]/20" : "bg-[#FFFAF0] border-gray-200";
+  const textColorClass = isDarkNav ? "text-[#FFFAF0]" : "text-[#2F4F4F]";
+  const hoverColorClass = isDarkNav ? "hover:text-[#DAA520]" : "hover:text-gray-600";
+  const logoFilter = isDarkNav ? "brightness-0 invert" : ""; // White Logo for Dark BG
+
+  const getLinkClasses = (path) => {
+    const isActive = location.pathname === path;
+    if (isDarkNav) {
+       // Dark Background Styles
+       return isActive ? "text-[#DAA520] font-extrabold" : "text-gray-300 hover:text-[#DAA520]";
+    } else {
+       // Light Background Styles
+       return isActive ? "text-[#2F4F4F] font-extrabold" : "text-gray-500 hover:text-[#2F4F4F]";
+    }
+  };
+
+  const navLinks = [
+    { name: "Home", path: "/" },
+    { name: "Journals", path: "/journals" },
+    { name: "Keychains", path: "/keychains" },
+    { name: "Art Work", path: "/artworks" },
+    { name: "Limited Editions", path: "/limited-editions" },
+    { name: "Our Story", path: "/our-story" },
+    { name: "Best Sellers", path: "/best-sellers" },
+    { name: "Journalling Club", path: "/club" },
+  ];
 
   return (
-    <nav className="bg-[#FFFAF0] sticky top-0 z-50 font-serif border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-5 relative">
+    <nav className={`${navBgClass} sticky top-0 z-50 font-serif border-b shadow-sm transition-colors duration-300`}>
+      <div className="max-w-7xl mx-auto px-3 md:px-6 py-3 relative">
         
-        {/* Mobile Header */}
-        <div className="flex justify-between items-center">
-          <button className="md:hidden text-[#2F4F4F]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+        {/* --- HEADER ROW --- */}
+        <div className="flex justify-between items-center relative min-h-[30px]">
+          
+          {/* Hamburger Button */}
+          <button className={`lg:hidden ${textColorClass}`} onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
 
-          {/* Logo */}
-          <div className="flex-grow text-center md:flex-grow-0 md:w-full md:text-center md:absolute md:left-0 md:top-5">
-            <Link to="/" className="text-3xl md:text-4xl font-bold text-[#2F4F4F] tracking-[0.2em] uppercase">
+          {/* LOGO IMAGE (Desktop Left) */}
+          <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2">
+             <Link to="/">
+               <img 
+                 src="https://cdn-icons-png.flaticon.com/512/2965/2965302.png" 
+                 alt="Logo"
+                 className={`h-8 w-auto transition-all duration-300 ${logoFilter}`} 
+               />
+             </Link>
+          </div>
+
+          {/* BRAND NAME (Centered) */}
+          <div className="flex-grow text-center lg:w-full">
+            <Link to="/" className={`text-3xl md:text-4xl font-bold tracking-[0.2em] uppercase transition-colors duration-300 ${textColorClass}`}>
               Damn Journals
             </Link>
           </div>
 
-          {/* Cart */}
-          <div className="md:absolute md:right-12 md:top-6 z-10">
-            <Link to="/cart" className="relative text-[#2F4F4F] hover:text-gray-600 transition">
+          {/* CART ICON (Right) */}
+          <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-10">
+            <Link to="/cart" className={`relative transition-colors duration-300 ${textColorClass} ${hoverColorClass}`}>
               <ShoppingBag size={26} />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-[#DAA520] text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-[#FFFAF0]">
+                <span className={`absolute -top-2 -right-2 bg-[#DAA520] text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 ${isDarkNav ? 'border-[#2F4F4F]' : 'border-[#FFFAF0]'}`}>
                   {cartCount}
                 </span>
               )}
@@ -42,25 +88,34 @@ const Navbar = () => {
           </div>
         </div>
         
-        {/* Desktop Links */}
-        <div className="hidden md:flex justify-center items-center mt-8 pt-2 w-full">
-          <div className="flex gap-12 text-xs font-bold tracking-[0.15em] text-gray-500 uppercase">
-            <Link to="/" className="hover:text-[#2F4F4F] transition">Home</Link>
-            <Link to="/journals" className="hover:text-[#2F4F4F] transition">Journals</Link>
-            <Link to="/keychains" className="hover:text-[#2F4F4F] transition">Keychains</Link>
-            <Link to="/blogs" className="hover:text-[#2F4F4F] transition">Blogs</Link>
-            <Link to="/artworks" className="hover:text-[#2F4F4F] transition">Art Works</Link>
+        {/* --- DESKTOP LINKS ROW --- */}
+        <div className="hidden lg:flex justify-center items-center mt-3 pt-2 w-full border-t border-current/10">
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-[11px] font-bold tracking-[0.15em] uppercase transition-all">
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name} 
+                to={link.path} 
+                className={`${getLinkClasses(link.path)} transition-colors duration-300`}
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        {/* --- MOBILE MENU --- */}
         {isMenuOpen && (
-          <div className="md:hidden flex flex-col items-center gap-6 py-8 bg-[#FFFAF0] mt-4 animate-fade-in">
-            <Link to="/" onClick={() => setIsMenuOpen(false)} className="text-sm font-bold tracking-widest text-gray-700 uppercase">Home</Link>
-            <Link to="/journals" onClick={() => setIsMenuOpen(false)} className="text-sm font-bold tracking-widest text-gray-700 uppercase">Journals</Link>
-            <Link to="/keychains" onClick={() => setIsMenuOpen(false)} className="text-sm font-bold tracking-widest text-gray-700 uppercase">Keychains</Link>
-            <Link to="/blogs" onClick={() => setIsMenuOpen(false)} className="text-sm font-bold tracking-widest text-gray-700 uppercase">Blogs</Link>
-            <Link to="/artworks" onClick={() => setIsMenuOpen(false)} className="text-sm font-bold tracking-widest text-gray-700 uppercase">Art Works</Link>
+          <div className={`lg:hidden flex flex-col items-center gap-6 py-8 mt-4 border-t animate-fade-in h-screen ${isDarkNav ? 'bg-[#2F4F4F] border-gray-600' : 'bg-[#FFFAF0] border-gray-200'}`}>
+            {navLinks.map((link) => (
+              <Link 
+                key={link.name}
+                to={link.path} 
+                onClick={() => setIsMenuOpen(false)} 
+                className={`text-sm font-bold tracking-widest uppercase hover:text-[#DAA520] ${isDarkNav ? 'text-gray-200' : 'text-gray-700'}`}
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
         )}
       </div>
