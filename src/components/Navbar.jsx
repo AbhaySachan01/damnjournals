@@ -46,7 +46,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`${navBgClass} sticky top-0 z-50 font-serif border-b shadow-sm transition-colors duration-300`}>
+    <nav id="main-navbar" className={`${navBgClass} sticky top-0 z-50 font-serif border-b shadow-sm transition-colors duration-300`}>
       <div className="max-w-7xl mx-auto px-3 md:px-6 py-3 relative">
         
         {/* --- HEADER ROW --- */}
