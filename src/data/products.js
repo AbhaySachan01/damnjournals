@@ -71,11 +71,12 @@ export const products = [
     tagline: "Not Just a Journal, It’s a Damn Legacy",
     featured: true,
     images: [
-      "https://images.unsplash.com/photo-1531346878377-a513bc951a46?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1604145559206-e3bce0040e2d?auto=format&fit=crop&q=80&w=800",
+      cld("journals/surkhrooh1.jpg"),
+      cld("journals/surkhrooh2.jpg"),
+      cld("journals/surkhrooh3.jpg"),
       cld("journals/vintagepages.jpg"),
     ]
+
   },
   { 
     id: "78605", 
@@ -89,11 +90,11 @@ export const products = [
     tagline: "Not Just a Journal, It’s a Damn Legacy",
     featured: false,
     images: [
-      "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1518644730709-0835105d9daa?auto=format&fit=crop&q=80&w=800",
-      "https://images.unsplash.com/photo-1595183321683-9b9829d48b79?auto=format&fit=crop&q=80&w=800",
-      cld("journals/vintagepages.jpg"),
-    ]
+  cld("journals/theredmoon1.jpg"),
+  cld("journals/theredmoon2.jpg"),
+  cld("journals/theredmoon3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
   },
   {
   id: "78606",
@@ -108,11 +109,12 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-    "https://images.unsplash.com/photo-1519682337058-a94d519337bc?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800",
-    cld("journals/vintagepages.jpg"),
-  ]
+  cld("journals/thedustymoon1.jpg"),
+  cld("journals/thedustymoon2.jpg"),
+  cld("journals/thedustymoon3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
+
 }
 ,
 {
@@ -127,11 +129,12 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-    "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=800",
-    cld("journals/vintagepages.jpg"),
-  ]
+  cld("journals/dilkidastakgreen1.jpg"),
+  cld("journals/dilkidastakgreen2.jpg"),
+  cld("journals/dilkidastakgreen3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
+
 }
 ,
 {
@@ -147,11 +150,12 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-    "https://images.unsplash.com/photo-1500534314209-a26db0f5c5a9?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800",
-    cld("journals/vintagepages.jpg"),
-  ]
+  cld("journals/earthbound1.jpg"),
+  cld("journals/earthbound2.jpg"),
+  cld("journals/earthbound3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
+
 }
 ,
 {
@@ -166,11 +170,12 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-    "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=800",
-    cld("journals/vintagepages.jpg"),
-  ]
+  cld("journals/dilkidastakblack1.jpg"),
+  cld("journals/dilkidastakblack2.jpg"),
+  cld("journals/dilkidastakblack3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
+
 }
 ,
 {
@@ -185,10 +190,11 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-    "https://images.unsplash.com/photo-1500534314209-a26db0f5c5a9?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800"
-  ]
+  cld("journals/thejourneyjournal1.jpg"),
+  cld("journals/thejourneyjournal2.jpg"),
+  cld("journals/thejourneyjournal3.jpg"),
+]
+
 }
 ,
 {
@@ -203,11 +209,12 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-    "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&q=80&w=800",
-    cld("journals/vintagepages.jpg"),
-  ]
+  cld("journals/theinnerforest1.jpg"),
+  cld("journals/theinnerforest2.jpg"),
+  cld("journals/theinnerforest3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
+
 }
 ,{
   id: "78612",
@@ -221,10 +228,11 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-    "https://images.unsplash.com/photo-1500534314209-a26db0f5c5a9?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&q=80&w=800"
-  ]
+  cld("journals/raahkikhoj1.jpg"),
+  cld("journals/raahkikhoj2.jpg"),
+  cld("journals/raahkikhoj3.jpg"),
+]
+
 }
 ,
 {
@@ -239,11 +247,11 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: true,
   images: [
-    "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=800",
-    cld("journals/vintagepages.jpg"),
-  ]
+  cld("journals/theunicornworld1.jpg"),
+  cld("journals/theunicornworld2.jpg"),
+  cld("journals/theunicornworld3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
 }
 ,
 {
@@ -258,11 +266,12 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: true,
   images: [
-    "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&q=80&w=800",
-    cld("journals/vintagepages.jpg"),
-  ]
+  cld("journals/theglowynights1.jpg"),
+  cld("journals/theglowynights2.jpg"),
+  cld("journals/theglowynights3.jpg"),
+  cld("journals/vintagepages.jpg"),
+]
+
 }
 ,
 {
@@ -277,10 +286,11 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: true,
   images: [
-    "https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=800",
-    "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800"
-  ]
+  cld("journals/theoxfordmemorial1.jpg"),
+  cld("journals/theoxfordmemorial2.jpg"),
+  cld("journals/theoxfordmemorial3.jpg"),
+]
+
 }
 ,
 ];

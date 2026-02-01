@@ -10,18 +10,22 @@ const Navbar = () => {
   
   const location = useLocation();
 
-  // --- CHANGE IS HERE ---
-  // In pages ki list bana li jahan Green Nav dikhana hai
+  const CLOUDINARY_BASE =
+  "https://res.cloudinary.com/dafcbp9mu/image/upload";
+
+  const cld = (publicId, w = 200) =>
+  `${CLOUDINARY_BASE}/f_auto,q_auto,w_${w}/${publicId}`;
+
+
+
   const greenPages = ['/', '/artworks', '/our-story','/cart'];
-  
-  // Check karein agar current page list me hai
   const isDarkNav = greenPages.includes(location.pathname);
 
-  // --- STYLES CONFIG (ab 'isDarkNav' use karenge) ---
+
   const navBgClass = isDarkNav ? "bg-[#2F4F4F] border-[#DAA520]/20" : "bg-[#FFFAF0] border-gray-200";
   const textColorClass = isDarkNav ? "text-[#FFFAF0]" : "text-[#2F4F4F]";
   const hoverColorClass = isDarkNav ? "hover:text-[#DAA520]" : "hover:text-gray-600";
-  const logoFilter = isDarkNav ? "brightness-0 invert" : ""; // White Logo for Dark BG
+  const logoFilter = isDarkNav ? "brightness-80 "  : ""; // White Logo for Dark BG
 
   const getLinkClasses = (path) => {
     const isActive = location.pathname === path;
@@ -61,9 +65,9 @@ const Navbar = () => {
           <div className="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2">
              <Link to="/">
                <img 
-                 src="https://cdn-icons-png.flaticon.com/512/2965/2965302.png" 
+                 src={cld('journals/logo.jpg')} 
                  alt="Logo"
-                 className={`h-8 w-auto transition-all duration-300 ${logoFilter}`} 
+                 className={`h-14 w-auto transition-all duration-300 rounded-full m-2 ${logoFilter}`} 
                />
              </Link>
           </div>
