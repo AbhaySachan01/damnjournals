@@ -7,7 +7,7 @@ const cld = (publicId, w = 800) =>
 export const products = [
   { 
     id: "78602", 
-    name: "Dil Ki Dastak", 
+    name: "Dil Ki Dastak (Red)", 
     category: "journals", 
     price: 600, 
     pageQuality: "Vintage Pages",
@@ -18,8 +18,8 @@ export const products = [
     tagline: "Not Just a Journal, It’s a Damn Legacy",
     featured: true,
     images: [
-     cld("journals/dilkidastak1.jpg"),
-     cld("journals/dilkidastak2.jpg"),
+     cld("journals/dilkidastakred1.jpg"),
+     cld("journals/dilkidastakred2.jpg"),
       cld("journals/vintagepages.jpg"),
     ]
   },

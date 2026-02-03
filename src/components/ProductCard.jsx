@@ -2,14 +2,14 @@ import React from 'react';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product,basePath  }) => {
   const { addToCart } = useCart();
 
   return (
     <div className="bg-white group flex flex-col h-full hover:shadow-2xl transition-all duration-300 ease-in-out border border-transparent hover:border-gray-100 relative">
       
       {/* 1. Image Link Wrapper - Click to go to details */}
-      <Link to={`/product/${product.id}`} className="w-full aspect-[4/5] overflow-hidden relative bg-gray-100 block">
+      <Link to={`${basePath}/${product.id}`} className="w-full aspect-[4/5] overflow-hidden relative bg-gray-100 block">
         {/* Pehli image array se utha rahe hain */}
         <img 
           src={product.images[0]} 

@@ -43,7 +43,7 @@ const Navbar = () => {
     { name: "Journals", path: "/journals" },
     { name: "Keychains", path: "/keychains" },
     { name: "Art Work", path: "/artworks" },
-    { name: "Limited Editions", path: "/limited-editions" },
+    { name: "Limited Edition", path: "/limited-editions" },
     { name: "Our Story", path: "/our-story" },
     { name: "Best Sellers", path: "/best-sellers" },
     { name: "Journalling Club", path: "/club" },
