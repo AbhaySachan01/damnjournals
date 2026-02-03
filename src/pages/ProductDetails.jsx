@@ -9,7 +9,7 @@ const ProductDetails = () => {
   const { addToCart } = useCart();
   
   const product = products.find((p) => p.id === id);
-  const [mainImage, setMainImage] = useState("");
+  const [mainImage, setMainImage] = useState(product?.image || null);
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -110,7 +110,7 @@ const CategoryPage = ({ category, title }) => {
               </div>
             </div>
           </div>
-        </div>
+        </div>  
       </div>
 
       {/* --- PRODUCTS GRID --- */}

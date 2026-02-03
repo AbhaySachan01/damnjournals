@@ -10,6 +10,7 @@ export const products = [
     name: "Dil Ki Dastak (Red)", 
     category: "journals", 
     price: 600, 
+    isBestseller: true,
     pageQuality: "Vintage Pages",
     pages: "150-200 Pages",
     size: "7*5",
@@ -20,7 +21,7 @@ export const products = [
     images: [
      cld("journals/dilkidastakred1.jpg"),
      cld("journals/dilkidastakred2.jpg"),
-      cld("journals/vintagepages.jpg"),
+      cld("journals/vintageall.jpg"),
     ]
   },
   { 
@@ -28,6 +29,7 @@ export const products = [
     name: "The Black Moon", 
     category: "journals", 
     price: 800, 
+    isBestseller: true,
     pageQuality: "Vintage Pages",
     pages: "150-200 Pages",
     size: "7*5",
@@ -37,7 +39,7 @@ export const products = [
     featured: true,
     images: [
       cld("journals/theblackmoon1.jpg"),
-      cld("journals/vintagepages.jpg"),
+     cld("journals/vintageall.jpg"),
     ]
   },
   { 
@@ -55,7 +57,7 @@ export const products = [
       cld("journals/xodiary1.jpg"),
       cld("journals/xodiary2.jpg"),
       cld("journals/xodiary3.jpg"),
-      cld("journals/vintagepages.jpg"),
+      cld("journals/vintageall.jpg"),
     ]
   },
   { 
@@ -72,9 +74,9 @@ export const products = [
     featured: true,
     images: [
       cld("journals/surkhrooh1.jpg"),
-      cld("journals/surkhrooh2.jpg"),
-      cld("journals/surkhrooh3.jpg"),
-      cld("journals/vintagepages.jpg"),
+      // cld("journals/surkhrooh2.jpg"),
+      // cld("journals/surkhrooh3.jpg"),
+      cld("journals/vintageall.jpg"),
     ]
 
   },
@@ -91,8 +93,8 @@ export const products = [
     featured: false,
     images: [
   cld("journals/theredmoon1.jpg"),
-  cld("journals/theredmoon2.jpg"),
-  cld("journals/theredmoon3.jpg"),
+  // cld("journals/theredmoon2.jpg"),
+  // cld("journals/theredmoon3.jpg"),
   cld("journals/vintagepages.jpg"),
 ]
   },
@@ -110,9 +112,9 @@ export const products = [
   featured: false,
   images: [
   cld("journals/thedustymoon1.jpg"),
-  cld("journals/thedustymoon2.jpg"),
-  cld("journals/thedustymoon3.jpg"),
-  cld("journals/vintagepages.jpg"),
+  // cld("journals/thedustymoon2.jpg"),
+  // cld("journals/thedustymoon3.jpg"),
+  cld("journals/vintageall.jpg"),
 ]
 
 }
@@ -122,6 +124,7 @@ export const products = [
   name: "Dil Ki Dastak (Green)",
   category: "journals",
   price: 600,
+  isBestseller: true,
   pageQuality: "Vintage Pages",
   pages: "150-200 Pages",
   size: "7*5",
@@ -130,9 +133,9 @@ export const products = [
   featured: false,
   images: [
   cld("journals/dilkidastakgreen1.jpg"),
-  cld("journals/dilkidastakgreen2.jpg"),
-  cld("journals/dilkidastakgreen3.jpg"),
-  cld("journals/vintagepages.jpg"),
+  // cld("journals/dilkidastakgreen2.jpg"),
+  // cld("journals/dilkidastakgreen3.jpg"),
+  cld("journals/vintageall.jpg"),
 ]
 
 }
@@ -151,9 +154,9 @@ export const products = [
   featured: false,
   images: [
   cld("journals/earthbound1.jpg"),
-  cld("journals/earthbound2.jpg"),
-  cld("journals/earthbound3.jpg"),
-  cld("journals/vintagepages.jpg"),
+  // cld("journals/earthbound2.jpg"),
+  // cld("journals/earthbound3.jpg"),
+  cld("journals/vintageall.jpg"),
 ]
 
 }
@@ -163,6 +166,7 @@ export const products = [
   name: "Dil Ki Dastak (Black)",
   category: "journals",
   price: 700,
+  isBestseller: true,
   pageQuality: "Vintage Pages",
   pages: "150-200 Pages",
   size: "7*5",
@@ -172,15 +176,15 @@ export const products = [
   images: [
   cld("journals/dilkidastakblack1.jpg"),
   cld("journals/dilkidastakblack2.jpg"),
-  cld("journals/dilkidastakblack3.jpg"),
-  cld("journals/vintagepages.jpg"),
+  // cld("journals/dilkidastakblack3.jpg"),
+  cld("journals/vintageall.jpg"),
 ]
 
 }
 ,
 {
   id: "78610",
-  name: "The Journey Journal",
+  name: "The Journey",
   category: "journals",
   price: 500,
   pageQuality: "Canvas Pages",
@@ -190,9 +194,9 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: false,
   images: [
-  cld("journals/thejourneyjournal1.jpg"),
-  cld("journals/thejourneyjournal2.jpg"),
-  cld("journals/thejourneyjournal3.jpg"),
+  cld("journals/thejourney1.jpg"),
+  // cld("journals/thejourney2.jpg"),
+  cld("journals/thejourney3.jpg"),
 ]
 
 }
@@ -211,8 +215,8 @@ export const products = [
   images: [
   cld("journals/theinnerforest1.jpg"),
   cld("journals/theinnerforest2.jpg"),
-  cld("journals/theinnerforest3.jpg"),
-  cld("journals/vintagepages.jpg"),
+  cld("journals/vintageall.jpg"),
+  // cld("journals/vintagepages.jpg"),
 ]
 
 }
@@ -237,7 +241,7 @@ export const products = [
 ,
 {
   id: "78613",
-  name: "The Unicorn World",
+  name: "The Unicorn Mania",
   category: "journals",
   price: 750,
   pageQuality: "Vintage Pages",
@@ -247,12 +251,33 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: true,
   images: [
-  cld("journals/theunicornworld1.jpg"),
-  cld("journals/theunicornworld2.jpg"),
-  cld("journals/theunicornworld3.jpg"),
-  cld("journals/vintagepages.jpg"),
+  cld("journals/unicornmania1.jpg"),
+  // cld("journals/theunicornworld2.jpg"),
+  // cld("journals/theunicornworld3.jpg"),
+  cld("journals/vintageall.jpg"),
 ]
 }
+,
+{
+  id: "78615",
+  name: "Dil Ki Dastak (Blue)",
+  category: "journals",
+  price: 700,
+  isBestseller: true,
+  pageQuality: "Vintage Pages",
+  pages: "150-200 Pages",
+  size: "7*5",
+  description: "Dil Ki Dastak (Blue) Journal by Damn Journals is a handcrafted luxury journal designed for calm reflection and creative flow. Crafted in India with premium-quality paper and a serene blue aesthetic, this journal encourages mindful journaling, poetry, planning, and personal notes. Its smooth, long-lasting vintage pages provide a soothing writing experience, making it perfect for everyday use or as a thoughtful gift for someone who finds clarity in writing.",
+  tagline: "Not Just a Journal, It’s a Damn Legacy",
+  featured: false,
+  images: [
+    cld("journals/dilkidastakblue1.jpg"),
+    cld("journals/dilkidastakblue2.jpg"),
+    // cld("journals/dilkidastakblue3.jpg"),
+    cld("journals/vintageall.jpg"),
+  ]
+}
+
 ,
 {
   id: "78614",
@@ -291,6 +316,28 @@ export const products = [
   cld("journals/theoxfordmemorial3.jpg"),
 ]
 
+}
+,
+
+{
+  id: "78621",
+  name: "Key of Secrets",
+  category: "journals",
+  price: 700,
+  isBestseller: true,
+  pageQuality: "Vintage Pages",
+  pages: "100-150 Pages",
+  size: "6*5",
+  description:
+    "The Key of Secrets Journal by Damn Journals is a premium handcrafted journal created for private thoughts, self-reflection, and intentional writing. With a timeless vintage aesthetic, it offers a meaningful space to preserve ideas, emotions, and personal stories through daily journaling.",
+  tagline: "Not Just a Journal, It’s a Damn Legacy",
+  featured: false,
+  serialNumber: "78621",
+  images: [
+    cld("journals/keyofsecrets1.jpg"),
+    // cld("journals/keyofsecrets2.jpg"),
+    cld("journals/vintageall.jpg"),
+  ],
 }
 ,
 ];
