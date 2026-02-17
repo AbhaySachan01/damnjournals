@@ -16,6 +16,9 @@ import Artworks from './pages/Artworks';
 import LimitedEditionDetails from './pages/LimitedEditionDetails';
 import LimitedEditionsPage from './pages/LimitedEditionsPage';
 import BestsellersPage from './pages/BestSellersPage';
+import KeychainDetails from './pages/KeyChainDetails';
+import KeychainsPage from './pages/KeyChainsPage';
+
 function App() {
   return (
     <CartProvider>
@@ -23,9 +26,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
-            
+            <Route path="/keychains" element={<KeychainsPage />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="limited-editions/:id" element={<LimitedEditionDetails />} />
+            <Route path="/keychains/:id" element={<KeychainDetails />} />
             <Route path="best-sellers" element={<BestsellersPage />} />
             <Route path="journals" element={<CategoryPage category="journals" title="Handcrafted Journals" />} />
             <Route path="keychains" element={<CategoryPage category="keychains" title="Keychains" />} />

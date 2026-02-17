@@ -55,9 +55,9 @@ const Artworks = () => {
           
           {/* THE TRACK (Ye slide karega) */}
           <div 
-            className="flex h-full transition-transform duration-700 ease-in-out"
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-          >
+          className="flex h-full transition-transform duration-[3000ms] ease-[cubic-bezier(0.65,0,0.35,1)]"
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        >
             {sliderImages.map((img, index) => (
               // Individual Slide
               <div key={index} className="min-w-full h-full relative">
