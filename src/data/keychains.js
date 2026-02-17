@@ -1,3 +1,9 @@
+const CLOUDINARY_BASE =
+  "https://res.cloudinary.com/dafcbp9mu/image/upload";
+
+const cld = (publicId, w = 800) =>
+  `${CLOUDINARY_BASE}/f_auto,q_auto,w_${w}/${publicId}`;
+
 export const keychains = [
   {
     id: "78621",
@@ -12,8 +18,9 @@ export const keychains = [
     description:
       "SAFAR Keychain is a handcrafted mini journal keychain designed in a vintage luxury style. Inspired by travel and self-expression, it’s a meaningful everyday accessory for writers, creators, and explorers. Lightweight, durable, and thoughtfully detailed, it works as both a symbolic keepsake and a unique gifting option for people who carry stories wherever they go.",
     images: [
-      "/images/keychains/safarbrown1.jpg",
-      "/images/keychains/safarbrown2.jpg",
+      cld("journals/safarbrown1.jpg"),
+      cld("journals/safarbrown2.jpg"),
+    
       // "/images/keychains/safar-brown-3.jpg",
     ],
   },
@@ -30,8 +37,8 @@ export const keychains = [
     description:
       "SAFAR Keychain is a handcrafted mini journal keychain designed in a vintage luxury style. Inspired by travel and self-expression, it’s a meaningful everyday accessory for writers, creators, and explorers. Lightweight, durable, and thoughtfully detailed, it works as both a symbolic keepsake and a unique gifting option for people who carry stories wherever they go.",
     images: [
-      "/images/keychains/safarblack1.jpg",
-      "/images/keychains/safarblack2.jpg",
+      cld("journals/safarblack1.jpg"),
+      cld("journals/safarblack2.jpg"),
       // "/images/keychains/safar-black-3.jpg",
     ],
   },

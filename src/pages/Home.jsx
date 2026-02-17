@@ -3,21 +3,28 @@ import { products } from '../data/products';
 import ProductCard from '../components/ProductCard';
 import { Link } from 'react-router-dom';
 
+const CLOUDINARY_BASE =
+"https://res.cloudinary.com/dafcbp9mu/image/upload";
+
+const cld = (publicId, w = 800) =>
+`${CLOUDINARY_BASE}/f_auto,q_auto,w_${w}/${publicId}`;
+
 const heroImages = [
-  "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&q=80&w=1000",
-  "https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=1000",
-  "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=1000",
+  cld("journals/pic1.png"),
+  cld("journals/pic2.png"),
+  cld("journals/pic3.png"),
 ];
 
 const Home = () => {
   const featuredProducts = products.filter(product => product.featured);
+
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
 useEffect(() => {
   const interval = setInterval(() => {
     setCurrentSlide(prev => (prev + 1) % heroImages.length);
-  }, 4000);
+  }, 7000);
 
   return () => clearInterval(interval);
 }, []);
@@ -48,11 +55,11 @@ useEffect(() => {
           </div>
 
          <div className="md:w-1/2 w-full flex justify-center md:justify-end">
-  <div className="w-full max-w-lg h-[400px] bg-[#2F4F4F] relative shadow-2xl overflow-hidden">
+  <div className="w-full max-w-120 h-[550px] bg-[#2F4F4F] relative shadow-2xl overflow-hidden">
 
     {/* Sliding Container */}
     <div 
-       className="flex h-full transition-transform duration-[3000ms] ease-[cubic-bezier(0.65,0,0.35,1)]"
+       className="flex h-full transition-transform duration-[4500ms] ease-[cubic-bezier(0.65,0,0.35,1)]"
       style={{ transform: `translateX(-${currentSlide * 100}%)` }}
     >
       {heroImages.map((img, index) => (

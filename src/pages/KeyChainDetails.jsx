@@ -35,7 +35,7 @@ const KeychainDetails = () => {
             
             {/* Main Image */}
             <div className="relative w-full">
-              <div className="bg-[#F5F5F5] rounded-lg overflow-hidden w-full aspect-square relative group">
+              <div className="bg-[#F5F5F5] rounded-lg overflow-hidden w-full aspect-square md:aspect-[3/4] relative group">
                 <img 
                   src={mainImage} 
                   alt={keychain.name} 
