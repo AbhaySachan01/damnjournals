@@ -328,6 +328,7 @@ export const products = [
   pageQuality: "Vintage Pages",
   pages: "100-150 Pages",
   size: "6*5",
+  featured: true,
   description:
     "The Key of Secrets Journal by Damn Journals is a premium handcrafted journal created for private thoughts, self-reflection, and intentional writing. With a timeless vintage aesthetic, it offers a meaningful space to preserve ideas, emotions, and personal stories through daily journaling.",
   tagline: "Not Just a Journal, It’s a Damn Legacy",
