@@ -18,6 +18,7 @@ import LimitedEditionsPage from './pages/LimitedEditionsPage';
 import BestsellersPage from './pages/BestSellersPage';
 import KeychainDetails from './pages/KeyChainDetails';
 import KeychainsPage from './pages/KeyChainsPage';
+import JournalingClub from './pages/JournalingClub';
 
 function App() {
   return (
@@ -40,10 +41,10 @@ function App() {
             <Route path="bulk-order" element={<BulkOrder />} />
             <Route path="faqs" element={<Faqs />} />
             <Route path="limited-editions" element={<LimitedEditionsPage />} />
-            <Route path="club" element={<div className="text-center py-20 font-serif text-2xl">Journalling Club - Coming Soon</div>} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="our-story" element={<OurStory />} />
             <Route path="artworks" element={<Artworks />} />
+            <Route path="club" element={<JournalingClub/>} />
 
           </Route>
         </Routes>

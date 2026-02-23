@@ -1,1 +1,49 @@
 @import "tailwindcss";
+
+/* === Floating Animations === */
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes float-delay {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(20px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay {
+  animation: float-delay 7s ease-in-out infinite;
+}
+
+/* === Smooth Scroll === */
+html {
+  scroll-behavior: smooth;
+}
+
+/* === Top Apply Button === */
+.apply-top-btn {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  z-index: 999;
+  background-color: #2F4F4F;
+  color: white;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.apply-top-btn:hover {
+  background-color: #DAA520;
+  color: #2F4F4F;
+  transform: translateY(-2px);
+}

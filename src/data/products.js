@@ -233,8 +233,8 @@ export const products = [
   featured: false,
   images: [
   cld("journals/raahkikhoj1.jpg"),
-  cld("journals/raahkikhoj2.jpg"),
-  cld("journals/raahkikhoj3.jpg"),
+  // cld("journals/raahkikhoj2.jpg"),
+  cld("journals/canvasall.jpg"),
 ]
 
 }
@@ -291,9 +291,9 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: true,
   images: [
-  cld("journals/theglowynights1.jpg"),
-  cld("journals/theglowynights2.jpg"),
-  cld("journals/theglowynights3.jpg"),
+  cld("journals/glowynights1.jpg"),
+  // cld("journals/theglowynights2.jpg"),
+  // cld("journals/theglowynights3.jpg"),
   cld("journals/vintagepages.jpg"),
 ]
 
@@ -311,9 +311,9 @@ export const products = [
   tagline: "Not Just a Journal, It’s a Damn Legacy",
   featured: true,
   images: [
-  cld("journals/theoxfordmemorial1.jpg"),
-  cld("journals/theoxfordmemorial2.jpg"),
-  cld("journals/theoxfordmemorial3.jpg"),
+  cld("journals/theoxford1.jpg"),
+  cld("journals/theoxford2.jpg"),
+  cld("journals/canvasall.jpg"),
 ]
 
 }

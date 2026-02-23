@@ -18,7 +18,7 @@ const Navbar = () => {
 
 
 
-  const greenPages = ['/', '/artworks', '/our-story','/cart'];
+  const greenPages = ['/', '/artworks', '/our-story','/cart','/club'];
   const isDarkNav = greenPages.includes(location.pathname);
 
 
