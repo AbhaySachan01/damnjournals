@@ -66,6 +66,11 @@ export const CartProvider = ({ children }) => {
     return cart.reduce((count, item) => count + item.quantity, 0);
   };
 
+  const clearCart = () => {
+    setCart([]);
+  };
+
+
   const checkoutViaWhatsApp = () => {
     const phoneNumber = "919713631331"; 
     
@@ -92,7 +97,9 @@ export const CartProvider = ({ children }) => {
       removeFromCart, 
       getCartTotal, 
       getCartCount,
-      checkoutViaWhatsApp 
+      checkoutViaWhatsApp,
+      clearCart
+
     }}>
       {children}
     </CartContext.Provider>

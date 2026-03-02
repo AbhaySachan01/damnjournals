@@ -19,7 +19,10 @@ import BestsellersPage from './pages/BestSellersPage';
 import KeychainDetails from './pages/KeyChainDetails';
 import KeychainsPage from './pages/KeyChainsPage';
 import JournalingClub from './pages/JournalingClub';
-
+import Auth from './pages/Auth';
+import VerifyEmail from './pages/VerifyEmail';
+import Order from './pages/Order';
+import MyOrders from './pages/MyOrders';
 function App() {
   return (
     <CartProvider>
@@ -28,6 +31,10 @@ function App() {
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="/keychains" element={<KeychainsPage />} />
+            <Route path="/auth" element={<Auth/>} />
+            <Route path="verify/:token" element={<VerifyEmail />} />
+            <Route path="order" element={<Order />} />
+            <Route path="my-orders" element={<MyOrders />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="limited-editions/:id" element={<LimitedEditionDetails />} />
             <Route path="/keychains/:id" element={<KeychainDetails />} />

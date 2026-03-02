@@ -1,10 +1,34 @@
 import React from 'react';
 import { useCart } from '../context/CartContext';
-import { Trash2, Plus, Minus } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Minus, Plus } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom'; // useNavigate import kiya
+import toast from 'react-hot-toast'; // Toast import kiya alerts ke liye
 
 const Cart = () => {
-  const { cart, addToCart, decreaseQuantity, removeFromCart, getCartTotal, checkoutViaWhatsApp } = useCart();
+  // checkoutViaWhatsApp hata diya, baaki sab rakha hai
+  const { cart, addToCart, decreaseQuantity, removeFromCart, getCartTotal } = useCart();
+  const navigate = useNavigate();
+
+  // Naya Handle Checkout function
+  const handleCheckout = () => {
+    if (cart.length === 0) {
+      toast.error("Your cart is empty!");
+      return;
+    }
+
+    const token = localStorage.getItem('damn-journals-token');
+    const user = localStorage.getItem('damn-journals-user');
+
+    if (token && user) {
+      // User login hai -> Seedha Order page par bhejo
+      navigate('/order');
+    } else {
+      // User login nahi hai -> Auth page par bhejo, aur ek message pass karo
+      toast.error("Please login to proceed to checkout", { duration: 3000 });
+      // Hum state pass kar rahe hain taaki login ke baad auth page wapas redirect kar sake
+      navigate('/auth', { state: { redirectTo: '/order' } }); 
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-16 max-w-4xl min-h-[60vh]">
@@ -87,11 +111,12 @@ const Cart = () => {
                 <span>₹ {getCartTotal()}</span>
               </div>
 
+              {/* Button change kiya gaya hai */}
               <button 
-                onClick={checkoutViaWhatsApp}
-                className="w-full bg-[#25D366] text-white font-bold py-4 hover:bg-green-600 transition flex items-center justify-center gap-3 uppercase tracking-widest text-xs shadow-lg"
+                onClick={handleCheckout}
+                className="w-full bg-[#2F4F4F] text-white font-bold py-4 hover:bg-[#1a2e2e] transition flex items-center justify-center gap-3 uppercase tracking-widest text-xs shadow-lg"
               >
-                Checkout on WhatsApp
+                Proceed to Checkout
               </button>
             </div>
           </div>
