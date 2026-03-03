@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const { getCartCount } = useCart();
-  const { user, setUser } = useAuth(); // 2. useAuth se user aur setUser nikala
+  const { user, logout } = useAuth(); // 2. useAuth se user aur setUser nikala
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   
@@ -30,12 +30,12 @@ const Navbar = () => {
   // Logout Logic: Context aur Storage dono clear karein
   const handleLogout = async () => {
     try {
-      // Agar aapne backend par logout route banaya hai toh fetch yahan karein
-      // Warna sirf client side clear karein
-      setUser(null); 
       setShowDropdown(false);
+      
+      // 🔥 YAHAN APNA ASLI CONTEXT WALA LOGOUT CALL KAR 🔥
+      await logout(); 
+      
       toast.success("Logged out successfully");
-      navigate('/');
     } catch (error) {
       toast.error("Logout failed");
     }
