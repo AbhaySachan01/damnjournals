@@ -71,25 +71,26 @@ export const createProduct = async (req, res) => {
 // @access  Private/Admin
 export const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findOne({ id: req.params.id });
+    // 1. findByIdAndUpdate use karo kyunki frontend se MongoDB _id aa rahi hai
+    // 2. req.body ko seedha pass karo taaki saare fields (images, tagline, etc.) update ho jaye
+    // 3. { new: true } se updated data wapas milta hai
+    // 4. { runValidators: true } se schema rules check hote hain
+    
+    const updatedProduct = await Product.findByIdAndUpdate(
+      req.params.id, 
+      req.body, 
+      { new: true, runValidators: true }
+    );
 
-    if (product) {
-      // Jo fields body mein aayenge unhe update karo, baaki purane rehne do
-      product.name = req.body.name || product.name;
-      product.price = req.body.price || product.price;
-      product.description = req.body.description || product.description;
-      product.category = req.body.category || product.category;
-      product.featured = req.body.featured !== undefined ? req.body.featured : product.featured;
-      product.isBestSeller = req.body.isBestSeller !== undefined ? req.body.isBestSeller : product.isBestSeller;
-      product.limitedEdition = req.body.limitedEdition !== undefined ? req.body.limitedEdition : product.limitedEdition;
-      product.countInStock = req.body.countInStock || product.countInStock;
-
-      const updatedProduct = await product.save();
+    if (updatedProduct) {
       res.json(updatedProduct);
     } else {
+      // Agar manual 'id' SKU se search karna hai tabhi purana logic lagao
+      // Par recommended findById hi hai
       res.status(404).json({ message: 'Product not found' });
     }
   } catch (error) {
+    console.error("Update Error:", error);
     res.status(500).json({ message: error.message });
   }
 };

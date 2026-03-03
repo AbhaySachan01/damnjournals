@@ -30,7 +30,8 @@ import AdminDashboard from './pages/AdminDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import Profile from './pages/Profile';
 import AdminProducts from './pages/AdminProducts';
-
+import ResetPassword from './pages/ResetPassword';
+import ForgotPassword from './pages/ForgotPassword';
 function App() {
   return (
     // 1. AuthProvider ko sabse bahar rakho taaki login state refresh par bani rahe
@@ -44,7 +45,8 @@ function App() {
               {/* Login/Signup Page - Dono paths handle kar diye */}
               <Route path="/auth" element={<Auth/>} />
               <Route path="/login" element={<Auth/>} /> 
-              
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="verify/:token" element={<VerifyEmail />} />
               
               {/* Admin Routes */}
