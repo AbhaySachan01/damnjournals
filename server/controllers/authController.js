@@ -131,11 +131,11 @@ export const googleAuth = async (req, res) => {
 
     // 4. Set Cookie (Sabse important)
     res.cookie('jwt', token, {
-        httpOnly: true,    // Security ke liye zaroori hai
-        secure: process.env.NODE_ENV === 'production', 
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-        path: '/',         // Taaki poori site pe cookie accessible ho
-        maxAge: 30 * 24 * 60 * 60 * 1000 // 30 din
+      httpOnly: true,
+      secure: true,      // Local par shayad ye kaam na kare, lekin Vercel par iske bina login nahi hoga
+      sameSite: 'none',  // Cross-site cookie ke liye mandatory hai
+      path: '/',
+      maxAge: 30 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
