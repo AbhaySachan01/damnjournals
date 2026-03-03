@@ -9,9 +9,9 @@ const Auth = () => {
   const location = useLocation();
   
   // States
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false); // Default Signup
   const [isLoading, setIsLoading] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false); // Signup success ke baad dikhane ke liye
+  const [isSubmitted, setIsSubmitted] = useState(false); // Success screen toggle
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,10 +24,15 @@ const Auth = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // --- 1. NORMAL LOGIN/SIGNUP ---
+  // --- LOGIC: Kab kaunsa input dikhana hai (Aapka purana logic) ---
+  const showEmail = isLogin || formData.name.trim().length > 0;
+  const showPassword = formData.email.includes('@') && formData.email.includes('.');
+  const showButton = formData.password.length > 0;
+
+  // --- MAIN FUNCTION ---
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsLoading(true); // Button ko loading state mein daalo
 
     try {
       const endpoint = isLogin ? '/login' : '/signup';
@@ -38,33 +43,39 @@ const Auth = () => {
         ? { email: formData.email, password: formData.password }
         : { name: formData.name, email: formData.email, password: formData.password };
 
+      // 1. Wait karo jab tak backend mail send na kar de
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(payload),
-        credentials: "include"
+
       });
 
       const data = await response.json();
+
       if (!response.ok) throw new Error(data.message || 'Something went wrong');
 
+      // 2. Response aane ke baad hi screen change karo
       if (isLogin) {
         toast.success("Welcome back!");
         navigate(from, { replace: true });
         window.location.reload(); 
       } else {
-        // Signup success logic
+        // Signup Success: Mail sent confirmation
         toast.success("Verification email sent!");
-        setIsSubmitted(true); // Ab yahan ye sahi se kaam karega
+        setIsSubmitted(true); // <--- AB YAHAN SUCCESS SCREEN DIKHEGI
+        setFormData({ name: '', email: '', password: '' });
       }
+
     } catch (error) {
       toast.error(error.message);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Loading band
     }
   };
 
-  // --- 2. GOOGLE LOGIN ---
+  // Google Login Logic (Same as before)
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     try {
@@ -75,12 +86,8 @@ const Auth = () => {
       const response = await fetch(`${API_BASE_URL}/api/auth/google`, { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          name: user.displayName, 
-          email: user.email, 
-          image: user.photoURL 
-        }),
-        credentials: "include"
+         credentials: "include",
+        body: JSON.stringify({ name: user.displayName, email: user.email, image: user.photoURL }),
       });
 
       const data = await response.json();
@@ -90,14 +97,11 @@ const Auth = () => {
       navigate(from, { replace: true });
       window.location.reload();
     } catch (error) {
-      toast.error(error.code === 'auth/popup-closed-by-user' ? "Login cancelled" : "Google Auth Failed");
+      toast.error("Google Auth Failed");
     } finally {
       setIsLoading(false);
     }
   };
-
-  const showEmail = isLogin || formData.name.trim().length > 2;
-  const showPassword = formData.email.includes('@') && formData.email.includes('.');
 
   return (
     <div className="min-h-screen bg-[#FFFAF0] flex flex-col justify-center items-center px-4 font-serif relative overflow-hidden">
@@ -109,10 +113,11 @@ const Auth = () => {
       <div className="w-full max-w-md bg-white p-10 rounded-sm shadow-xl border border-gray-100 relative z-10">
         
         {isSubmitted ? (
-          // --- SUCCESS VIEW ---
+          // --- SUCCESS VIEW (Mail sent confirmation) ---
           <div className="text-center animate-in fade-in zoom-in duration-500">
             <div className="text-6xl mb-6">📧</div>
             <h2 className="text-2xl font-bold text-[#2F4F4F] mb-4 uppercase tracking-widest">Verify Your Email</h2>
+            <p className="text-sm text-gray-500 mb-6">We have sent a link to your email. Please verify to login.</p>
             
             <button 
               onClick={() => {
@@ -138,19 +143,34 @@ const Auth = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
+              {/* NAME INPUT: Sirf Signup pe dikhega */}
               <div className={`transition-all duration-700 ease-in-out overflow-hidden ${!isLogin ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'}`}>
                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Full Name</label>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="e.g. Kabir Singh" className="w-full border-b-2 border-gray-200 focus:border-[#DAA520] bg-transparent py-2 outline-none text-[#2F4F4F] transition-colors" />
+                <input 
+                  type="text" name="name" value={formData.name} onChange={handleChange} 
+                  placeholder="e.g. Kabir Singh" disabled={isLoading}
+                  className="w-full border-b-2 border-gray-200 focus:border-[#DAA520] bg-transparent py-2 outline-none text-[#2F4F4F] transition-colors" 
+                />
               </div>
 
+              {/* EMAIL INPUT: Login pe, ya jab Name bhar diya ho */}
               <div className={`transition-all duration-700 ease-in-out overflow-hidden ${showEmail ? 'max-h-24 opacity-100' : 'max-h-0 opacity-0'}`}>
                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Email Address</label>
-                <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="you@example.com" className="w-full border-b-2 border-gray-200 focus:border-[#DAA520] bg-transparent py-2 outline-none text-[#2F4F4F] transition-colors" />
+                <input 
+                  type="email" name="email" value={formData.email} onChange={handleChange} 
+                  placeholder="you@example.com" disabled={isLoading}
+                  className="w-full border-b-2 border-gray-200 focus:border-[#DAA520] bg-transparent py-2 outline-none text-[#2F4F4F] transition-colors" 
+                />
               </div>
 
+              {/* PASSWORD INPUT: Jab Email valid ho */}
               <div className={`transition-all duration-700 ease-in-out overflow-hidden ${showPassword ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'}`}>
                 <label className="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Password</label>
-                <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="••••••••" className="w-full border-b-2 border-gray-200 focus:border-[#DAA520] bg-transparent py-2 outline-none text-[#2F4F4F] transition-colors" />
+                <input 
+                  type="password" name="password" value={formData.password} onChange={handleChange} 
+                  placeholder="••••••••" disabled={isLoading}
+                  className="w-full border-b-2 border-gray-200 focus:border-[#DAA520] bg-transparent py-2 outline-none text-[#2F4F4F] transition-colors" 
+                />
                 {isLogin && (
                   <div className="flex justify-end mt-2">
                     <Link to="/forgot-password" size="sm" className="text-xs text-gray-500 hover:text-[#DAA520]">Forgot Password?</Link>
@@ -158,8 +178,13 @@ const Auth = () => {
                 )}
               </div>
 
-              <div className={`transition-all duration-700 ease-in-out overflow-hidden ${formData.password.length > 0 ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'}`}>
-                <button type="submit" disabled={isLoading} className="w-full bg-[#2F4F4F] text-white py-4 uppercase tracking-[0.2em] text-xs font-bold hover:bg-[#1a2e2e] transition duration-300 disabled:bg-gray-400">
+              {/* SUBMIT BUTTON: Jab Password bhar diya ho */}
+              <div className={`transition-all duration-700 ease-in-out overflow-hidden ${showButton ? 'max-h-20 opacity-100' : 'max-h-0 opacity-0'}`}>
+                <button 
+                  type="submit" 
+                  disabled={isLoading} 
+                  className={`w-full text-white py-4 uppercase tracking-[0.2em] text-xs font-bold transition duration-300 ${isLoading ? 'bg-gray-400' : 'bg-[#2F4F4F] hover:bg-[#1a2e2e]'}`}
+                >
                   {isLoading ? 'Processing...' : (isLogin ? 'Sign In' : 'Create Account')}
                 </button>
               </div>
@@ -178,7 +203,7 @@ const Auth = () => {
             <div className="mt-8 text-center border-t border-gray-100 pt-6">
               <p className="text-sm text-gray-600">
                 {isLogin ? "Don't have an account? " : "Already part of the club? "}
-                <button onClick={() => { setIsLogin(!isLogin); setFormData({ name: '', email: '', password: '' }); }} className="text-[#DAA520] font-bold hover:underline transition-all">
+                <button onClick={() => { setIsLogin(!isLogin); setFormData({ name: '', email: '', password: '' }); setIsSubmitted(false); }} className="text-[#DAA520] font-bold hover:underline transition-all">
                   {isLogin ? 'Sign up' : 'Log in'}
                 </button>
               </p>

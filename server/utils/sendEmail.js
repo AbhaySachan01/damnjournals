@@ -1,44 +1,53 @@
-
-
 import nodemailer from 'nodemailer';
 
+// Email function
 export const sendVerificationEmail = async (email, token) => {
-  // 1. Pehle spaces saaf karo (19 chars se wapas 16 kar do)
-  const cleanPass = process.env.EMAIL_PASS;
-  const userEmail = process.env.EMAIL_USER;
-
-  console.log("DEBUG: Creating transporter with:", userEmail);
-
-  // 2. Transporter ko FUNCTION KE ANDAR create karo
+  // 1. TRANSPORTER KO FUNCTION KE ANDAR BANAO (Fresh Connection Logic)
+  // Isse Vercel/Serverless par delay nahi hoga
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: userEmail,
-      pass: cleanPass, 
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   const verifyUrl = `${process.env.CLIENT_URL}/verify/${token}`;
 
   const mailOptions = {
-    from: `"Damn Journals" <${userEmail}>`,
+    from: `"Damn Journals" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: "Verify your Damn Journals Account",
-    html: `<h3>Welcome to the Club!</h3><p>Click here: <a href="${verifyUrl}">${verifyUrl}</a></p>`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; border: 1px solid #eee; padding: 20px;">
+        <h2 style="color: #2F4F4F;">Welcome to the Club!</h2>
+        <p>Apna email verify karne ke liye niche click karein:</p>
+        <a href="${verifyUrl}" style="background: #DAA520; color: white; padding: 12px 25px; text-decoration: none; display: inline-block; font-weight: bold; border-radius: 4px;">Verify Email</a>
+      </div>
+    `,
   };
 
   try {
+    // Await lagana zaroori hai
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent successfully!");
+    console.log("✅ Verification Email sent instantly to:", email);
     return info;
   } catch (error) {
-    console.error("Nodemailer Error inside function:", error);
+    console.error("❌ Verification Email Failed:", error);
     throw error;
   }
 };
 
-// 2. Password Reset Email
+// Password Reset ke liye bhi same pattern use karein (Transporter andar)
 export const sendPasswordResetEmail = async (email, token) => {
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
   const resetUrl = `${process.env.CLIENT_URL}/reset-password/${token}`;
 
   const mailOptions = {
@@ -48,18 +57,18 @@ export const sendPasswordResetEmail = async (email, token) => {
     html: `
       <div style="font-family: sans-serif; max-width: 600px; border: 1px solid #eee; padding: 20px;">
         <h2 style="color: #2F4F4F;">Password Reset</h2>
-        <p>Kya aap apna password bhool gaye? Koi baat nahi, niche click karke naya password banayein:</p>
+        <p>Click below to reset password:</p>
         <a href="${resetUrl}" style="background: #2F4F4F; color: white; padding: 12px 25px; text-decoration: none; display: inline-block; font-weight: bold; border-radius: 4px;">Reset Password</a>
-        <p style="margin-top: 20px; font-size: 12px; color: #888;">Ye link sirf 15 minute tak valid hai.</p>
       </div>
     `,
   };
 
   try {
-    await transporter.sendMail(mailOptions);
-    console.log("Reset email sent to:", email);
+    const info = await transporter.sendMail(mailOptions);
+    console.log("📧 Password Reset email sent to:", email);
+    return info;
   } catch (error) {
-    console.error("Nodemailer Error:", error);
+    console.error("❌ Password Reset Email Failed:", error);
     throw new Error("Email sending failed");
   }
 };

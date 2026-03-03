@@ -118,16 +118,17 @@ export const signup = async (req, res) => {
             user.verificationToken = newVerificationToken;
             await user.save(); 
 
+            await sendVerificationEmail(user.email, newVerificationToken).catch(console.error);
             res.status(200).json({ message: 'Verification link sent to your email.' });
-            sendVerificationEmail(user.email, newVerificationToken).catch(console.error);
             return;
         }
 
         const verificationToken = crypto.randomBytes(20).toString('hex');
         user = await User.create({ name, email, password, verificationToken });
 
+        
+        await sendVerificationEmail(user.email, verificationToken).catch(console.error);
         res.status(201).json({ message: 'Signup successful. Please verify your email.' });
-        sendVerificationEmail(user.email, verificationToken).catch(console.error);
     } catch (error) {
         if (!res.headersSent) res.status(500).json({ message: error.message });
     }
