@@ -1,29 +1,48 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { keychains } from '../data/keychains';
+// import { keychains } from '../data/keychains'; // <-- Static data hataya
 import ProductCard from '../components/ProductCard';
 import { Search, ChevronDown, SlidersHorizontal } from 'lucide-react';
 
 const KeychainsPage = () => {
-  
+  const [dbKeychains, setDbKeychains] = useState([]); // Database se aane wala data
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("default"); 
   const [stickyTop, setStickyTop] = useState(0);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  // 1. Fetch Keychains from DB
+  useEffect(() => {
+    const fetchKeychains = async () => {
+      try {
+        // Humne category "Keychains" filter backend se hi maang li
+        const response = await fetch(`${API_BASE_URL}/api/products?category=Keychains`);
+        const data = await response.json();
+        setDbKeychains(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching keychains:", error);
+        setLoading(false);
+      }
+    };
+    fetchKeychains();
+  }, [API_BASE_URL]);
+
+  // 2. Navbar Sticky Logic
   useEffect(() => {
     const updatePosition = () => {
       const navbar = document.getElementById('main-navbar');
-      if (navbar) {
-        setStickyTop(navbar.offsetHeight);
-      }
+      if (navbar) setStickyTop(navbar.offsetHeight);
     };
-
     updatePosition();
     window.addEventListener('resize', updatePosition);
     return () => window.removeEventListener('resize', updatePosition);
   }, []);
 
+  // 3. Filter & Sort Logic (Using dbKeychains state)
   const filteredKeychains = useMemo(() => {
-    let result = [...keychains];
+    let result = [...dbKeychains];
 
     if (searchQuery) {
       result = result.filter(p =>
@@ -38,7 +57,7 @@ const KeychainsPage = () => {
     }
 
     return result;
-  }, [searchQuery, sortOrder]);
+  }, [searchQuery, sortOrder, dbKeychains]);
 
   return (
     <div className="bg-[#FFFAF0] min-h-screen font-sans pb-20">
@@ -58,7 +77,6 @@ const KeychainsPage = () => {
         style={{ top: `${stickyTop}px` }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-3">
-          
           <div className="flex flex-col md:flex-row gap-3 md:gap-4 justify-between items-center">
             
             {/* SEARCH */}
@@ -99,33 +117,36 @@ const KeychainsPage = () => {
       {/* PRODUCTS GRID */}
       <div className="max-w-7xl mx-auto px-2 md:px-8 py-10">
         
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 px-2">
-          Showing {filteredKeychains.length} Results
-        </p>
-
-        {filteredKeychains.length > 0 ? (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
-            {filteredKeychains.map(product => (
-              <ProductCard 
-                key={product.id} 
-                product={product} 
-                basePath="/keychains"
-              />
-            ))}
-          </div>
+        {loading ? (
+           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
+             {[1,2,3,4].map(n => <div key={n} className="h-72 bg-gray-100 animate-pulse rounded-md" />)}
+           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-32 opacity-70">
-            <Search size={48} className="text-gray-300 mb-4" />
-            <p className="text-xl text-[#2F4F4F] font-serif mb-2">
-              No keychains found
+          <>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 px-2">
+              Showing {filteredKeychains.length} Results
             </p>
-            <button 
-              onClick={() => setSearchQuery("")}
-              className="mt-4 text-[#DAA520] underline"
-            >
-              Clear Filters
-            </button>
-          </div>
+
+            {filteredKeychains.length > 0 ? (
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
+                {filteredKeychains.map(product => (
+                  <ProductCard 
+                    key={product.id} 
+                    product={product} 
+                    basePath="/keychains"
+                  />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-col items-center justify-center py-32 opacity-70">
+                <Search size={48} className="text-gray-300 mb-4" />
+                <p className="text-xl text-[#2F4F4F] font-serif mb-2">No keychains found</p>
+                <button onClick={() => setSearchQuery("")} className="mt-4 text-[#DAA520] underline">
+                  Clear Filters
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

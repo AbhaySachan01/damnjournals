@@ -124,19 +124,27 @@ const Navbar = () => {
                     </div>
 
                     <Link 
-                      to="/my-orders" 
-                      onClick={() => setShowDropdown(false)}
-                      className="flex items-center gap-3 px-4 py-3 text-sm text-[#2F4F4F] hover:bg-gray-50 transition-colors font-bold uppercase tracking-wider border-b border-gray-100"
-                    >
-                      📦 My Orders
-                    </Link>
+                        to="/profile" 
+                        onClick={() => setShowDropdown(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-[#2F4F4F] hover:bg-gray-50 transition-colors font-bold uppercase tracking-wider border-b border-gray-100"
+                      >
+                        👤 My Profile
+                      </Link>
 
-                    <button 
-                      onClick={handleLogout} 
-                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left text-red-600 hover:bg-red-50 transition-colors font-bold uppercase tracking-wider"
-                    >
-                      👋 Logout
-                    </button>
+                      <Link 
+                        to="/my-orders" 
+                        onClick={() => setShowDropdown(false)}
+                        className="flex items-center gap-3 px-4 py-3 text-sm text-[#2F4F4F] hover:bg-gray-50 transition-colors font-bold uppercase tracking-wider border-b border-gray-100"
+                      >
+                        📦 My Orders
+                      </Link>
+
+                      <button 
+                        onClick={handleLogout} 
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left text-red-600 hover:bg-red-50 transition-colors font-bold uppercase tracking-wider"
+                      >
+                        👋 Logout
+                      </button>
                   </div>
                 )}
               </div>

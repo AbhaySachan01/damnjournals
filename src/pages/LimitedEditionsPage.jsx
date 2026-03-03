@@ -1,32 +1,49 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { limitedEditions } from '../data/limitedEditions';
+// import { limitedEditions } from '../data/limitedEditions'; // Static data removed
 import ProductCard from '../components/ProductCard';
-import { Search, ChevronDown, SlidersHorizontal } from 'lucide-react';
+import { Search, ChevronDown, SlidersHorizontal, Loader2 } from 'lucide-react';
 
 const LimitedEditionsPage = () => {
-  
+  const [dbItems, setDbItems] = useState([]); // Database items
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("default"); 
-
   const [stickyTop, setStickyTop] = useState(0);
 
+  const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  // 1. Fetch Limited Editions from DB
+  useEffect(() => {
+    const fetchLimitedEditions = async () => {
+      try {
+        setLoading(true);
+        // API call to get products with category 'limited-editions'
+        const response = await fetch(`${API_BASE_URL}/api/products?category=limited-editions`);
+        const data = await response.json();
+        setDbItems(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching limited editions:", error);
+        setLoading(false);
+      }
+    };
+    fetchLimitedEditions();
+  }, [API_BASE_URL]);
+
+  // 2. Sticky Navbar Logic
   useEffect(() => {
     const updatePosition = () => {
       const navbar = document.getElementById('main-navbar');
-      if (navbar) {
-        setStickyTop(navbar.offsetHeight);
-      }
+      if (navbar) setStickyTop(navbar.offsetHeight);
     };
-
     updatePosition();
-    
     window.addEventListener('resize', updatePosition);
-    
     return () => window.removeEventListener('resize', updatePosition);
   }, []);
 
+  // 3. Filter & Sort Logic
   const filteredLimitedEditions = useMemo(() => {
-    let result = [...limitedEditions];
+    let result = [...dbItems];
     if (searchQuery) {
       result = result.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
     }
@@ -36,23 +53,25 @@ const LimitedEditionsPage = () => {
       result.sort((a, b) => b.price - a.price);
     }
     return result;
-  }, [searchQuery, sortOrder]);
+  }, [searchQuery, sortOrder, dbItems]);
 
   return (
     <div className="bg-[#FFFAF0] min-h-screen font-sans pb-20">
       
+      {/* HERO SECTION */}
       <div className="bg-[#2F4F4F] text-white py-12 md:py-16 text-center shadow-md relative overflow-hidden">
          <div className="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
          <h2 className="text-3xl md:text-5xl font-serif uppercase tracking-[0.2em] relative z-10">Limited Editions</h2>
+         <p className="text-[10px] md:text-xs uppercase tracking-[0.4em] mt-2 opacity-70 relative z-10 font-bold">Rare Masterpieces • Curated for You</p>
          <div className="h-1 w-20 bg-[#DAA520] mx-auto mt-4 relative z-10"></div>
       </div>
 
+      {/* FILTER BAR */}
       <div 
         className="sticky z-30 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all"
         style={{ top: `${stickyTop}px` }}
       >
         <div className="max-w-7xl mx-auto px-4 md:px-8 py-3">
-          
           <div className="flex flex-col md:flex-row gap-3 md:gap-4 justify-between items-center">
             
             <div className="relative w-full md:max-w-xs group">
@@ -88,23 +107,33 @@ const LimitedEditionsPage = () => {
         </div>
       </div>
 
+      {/* PRODUCTS GRID */}
       <div className="max-w-7xl mx-auto px-2 md:px-8 py-10">
-         <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 px-2">
-            Showing {filteredLimitedEditions.length} Results
-         </p>
-
-         {filteredLimitedEditions.length > 0 ? (
-           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
-             {filteredLimitedEditions.map(product => (
-               <ProductCard key={product.id} product={product} basePath="/limited-editions"  />
-             ))}
-           </div>
+         {loading ? (
+            <div className="flex flex-col items-center justify-center py-20">
+               <Loader2 className="animate-spin text-[#2F4F4F] mb-4" size={32} />
+               <p className="text-xs uppercase tracking-widest text-gray-400 font-bold">Loading Exclusives...</p>
+            </div>
          ) : (
-           <div className="flex flex-col items-center justify-center py-32 opacity-70">
-             <Search size={48} className="text-gray-300 mb-4" />
-             <p className="text-xl text-[#2F4F4F] font-serif mb-2">No items found</p>
-             <button onClick={() => setSearchQuery("")} className="mt-4 text-[#DAA520] underline">Clear Filters</button>
-           </div>
+           <>
+             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6 px-2">
+               Showing {filteredLimitedEditions.length} Results
+             </p>
+
+             {filteredLimitedEditions.length > 0 ? (
+               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-8">
+                 {filteredLimitedEditions.map(product => (
+                   <ProductCard key={product.id} product={product} basePath="/limited-editions"  />
+                 ))}
+               </div>
+             ) : (
+               <div className="flex flex-col items-center justify-center py-32 opacity-70">
+                 <Search size={48} className="text-gray-300 mb-4" />
+                 <p className="text-xl text-[#2F4F4F] font-serif mb-2">No items found</p>
+                 <button onClick={() => setSearchQuery("")} className="mt-4 text-[#DAA520] underline">Clear Filters</button>
+               </div>
+             )}
+           </>
          )}
       </div>
     </div>

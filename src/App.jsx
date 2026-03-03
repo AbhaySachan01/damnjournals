@@ -23,6 +23,13 @@ import Auth from './pages/Auth';
 import VerifyEmail from './pages/VerifyEmail';
 import Order from './pages/Order';
 import MyOrders from './pages/MyOrders';
+import Checkout from './pages/Checkout';
+import OrderSuccess from './pages/OrderSuccess';
+import AdminRoute from './components/AdminRoute';
+import AdminDashboard from './pages/AdminDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+import Profile from './pages/Profile';
+import AdminProducts from './pages/AdminProducts';
 function App() {
   return (
     <CartProvider>
@@ -33,7 +40,12 @@ function App() {
             <Route path="/keychains" element={<KeychainsPage />} />
             <Route path="/auth" element={<Auth/>} />
             <Route path="verify/:token" element={<VerifyEmail />} />
-            <Route path="order" element={<Order />} />
+            {/* <Route path="order" element={<Order />} /> */}
+            <Route path="/admin/dashboard" element={<AdminRoute>  <AdminDashboard /></AdminRoute> } />
+            <Route path="/admin/product" element={<AdminRoute>  <AdminProducts /></AdminRoute> } />
+            <Route path="/order" element={<Checkout />} />
+            <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/order-success/:id" element={<OrderSuccess />} />
             <Route path="my-orders" element={<MyOrders />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="limited-editions/:id" element={<LimitedEditionDetails />} />
