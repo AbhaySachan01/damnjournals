@@ -85,8 +85,8 @@ export const login = async (req, res) => {
       // TOKEN KO COOKIE MEIN SET KAREIN
       res.cookie('jwt', token, {
         httpOnly: true,    // Security ke liye zaroori hai
-        secure: true,     // Localhost HTTP hai, isliye isse FALSE hi rakho
-        sameSite: 'lax',   // 'strict' se localhost pe issue aata hai, 'lax' best hai
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
         path: '/',         // Taaki poori site pe cookie accessible ho
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 din
         });
@@ -131,10 +131,11 @@ export const googleAuth = async (req, res) => {
 
     // 4. Set Cookie (Sabse important)
     res.cookie('jwt', token, {
-      httpOnly: true,
-      secure: true, // Development mein false
-      sameSite: 'lax',
-      maxAge: 30 * 24 * 60 * 60 * 1000
+        httpOnly: true,    // Security ke liye zaroori hai
+        secure: process.env.NODE_ENV === 'production', 
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        path: '/',         // Taaki poori site pe cookie accessible ho
+        maxAge: 30 * 24 * 60 * 60 * 1000 // 30 din
     });
 
     res.status(200).json({
