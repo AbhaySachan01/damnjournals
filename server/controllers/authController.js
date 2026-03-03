@@ -85,7 +85,7 @@ export const login = async (req, res) => {
       // TOKEN KO COOKIE MEIN SET KAREIN
       res.cookie('jwt', token, {
         httpOnly: true,    // Security ke liye zaroori hai
-        secure: false,     // Localhost HTTP hai, isliye isse FALSE hi rakho
+        secure: true,     // Localhost HTTP hai, isliye isse FALSE hi rakho
         sameSite: 'lax',   // 'strict' se localhost pe issue aata hai, 'lax' best hai
         path: '/',         // Taaki poori site pe cookie accessible ho
         maxAge: 30 * 24 * 60 * 60 * 1000 // 30 din
@@ -132,7 +132,7 @@ export const googleAuth = async (req, res) => {
     // 4. Set Cookie (Sabse important)
     res.cookie('jwt', token, {
       httpOnly: true,
-      secure: false, // Development mein false
+      secure: true, // Development mein false
       sameSite: 'lax',
       maxAge: 30 * 24 * 60 * 60 * 1000
     });

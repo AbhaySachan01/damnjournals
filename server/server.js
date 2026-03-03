@@ -13,7 +13,7 @@ import productRoutes from './routes/productRoutes.js';
 connectDB();
 
 const app = express();
-
+app.set('trust proxy', 1);
 const allowedOrigins = [
   'http://localhost:5173',
   'https://damnjournals.vercel.app',
