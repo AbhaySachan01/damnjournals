@@ -25,4 +25,3 @@ dist-ssr
 *.sw?
 important.js
 server
-src/firebase.js
