@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Save, Plus, Trash2, Image as ImageIcon } from 'lucide-react';
-
+import {toast} from 'react-hot-toast'
 const AdminProductModal = ({ isOpen, onClose, onSave, editProduct }) => {
   const initialState = {
     id: '', 
@@ -25,6 +25,42 @@ const AdminProductModal = ({ isOpen, onClose, onSave, editProduct }) => {
     if (editProduct) setFormData({ ...initialState, ...editProduct });
     else setFormData(initialState);
   }, [editProduct, isOpen]);
+
+  const handleFileUpload = async (e) => {
+  const files = Array.from(e.target.files);
+  if (files.length === 0) return;
+
+  const uploadToast = toast.loading("Uploading images...");
+  
+  // Iska naam badal do taaki confusion na ho (State vs FormData)
+  const dataForServer = new FormData(); 
+  files.forEach(file => dataForServer.append('images', file));
+
+  try {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+    const res = await fetch(`${API_BASE_URL}/api/products/upload`, {
+      method: 'POST',
+      body: dataForServer,
+      credentials: 'include'
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      setFormData(prevData => ({ 
+        ...prevData, 
+        images: [...prevData.images.filter(img => img !== ''), ...data.urls] 
+      }));
+      
+      toast.success("Images Uploaded!", { id: uploadToast });
+    } else {
+      toast.error(data.message || "Upload failed", { id: uploadToast });
+    }
+  } catch (err) {
+    console.error(err);
+    toast.error("Network Error", { id: uploadToast });
+  }
+};
 
   // Handle Image URL changes
   const handleImageChange = (index, value) => {
@@ -122,29 +158,51 @@ const AdminProductModal = ({ isOpen, onClose, onSave, editProduct }) => {
             </div>
           </section>
 
-          {/* Image URLs Section */}
-          <section className="space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xs uppercase font-bold text-[#2F4F4F]">Product Images (URLs)</h3>
-              <button type="button" onClick={addImageField} className="text-[#DAA520] text-[10px] font-bold uppercase flex items-center gap-1 hover:underline">
-                <Plus size={14} /> Add Another URL
-              </button>
-            </div>
-            <div className="space-y-3">
-              {formData.images.map((url, index) => (
-                <div key={index} className="flex gap-2">
-                  <div className="relative flex-1">
-                    <ImageIcon className="absolute left-2 top-3 text-gray-300" size={16} />
-                    <input type="text" placeholder="https://image-url.com/photo.jpg" className="w-full border border-gray-100 pl-8 pr-2 py-2 text-xs focus:outline-none focus:border-[#2F4F4F]" 
-                      value={url} onChange={(e) => handleImageChange(index, e.target.value)} />
-                  </div>
-                  {formData.images.length > 1 && (
-                    <button type="button" onClick={() => removeImageField(index)} className="text-red-300 hover:text-red-500"><Trash2 size={18} /></button>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
+          {/* Image Section: Upload + Manual URLs */}
+<section className="space-y-4">
+  <div className="flex justify-between items-center">
+    <h3 className="text-xs uppercase font-bold text-[#2F4F4F]">Product Images</h3>
+    <div className="flex gap-4">
+      {/* Hidden File Input */}
+      <label className="cursor-pointer text-[#DAA520] text-[10px] font-bold uppercase flex items-center gap-1 hover:underline">
+        <Plus size={14} /> Upload from Device
+        <input type="file" multiple className="hidden" onChange={handleFileUpload} accept="image/*" />
+      </label>
+      
+      <button type="button" onClick={addImageField} className="text-[#2F4F4F] text-[10px] font-bold uppercase flex items-center gap-1 hover:underline">
+        <ImageIcon size={14} /> Add Manual URL
+      </button>
+    </div>
+  </div>
+
+  {/* Image List / Preview */}
+  <div className="grid grid-cols-1 gap-3">
+    {formData.images.map((url, index) => (
+      <div key={index} className="flex gap-2 items-center">
+        {/* Preview Thumbnail (Chota sa image dikhega) */}
+        {url && (
+          <img src={url} alt="preview" className="w-10 h-10 object-cover rounded-sm border border-gray-100" />
+        )}
+        
+        <div className="relative flex-1">
+          <input 
+            type="text" 
+            placeholder="Image URL" 
+            className="w-full border border-gray-100 pl-3 pr-2 py-2 text-xs focus:outline-none focus:border-[#2F4F4F]" 
+            value={url} 
+            onChange={(e) => handleImageChange(index, e.target.value)} 
+          />
+        </div>
+
+        {formData.images.length > 1 && (
+          <button type="button" onClick={() => removeImageField(index)} className="text-red-300 hover:text-red-500 transition-colors">
+            <Trash2 size={18} />
+          </button>
+        )}
+      </div>
+    ))}
+  </div>
+</section>
 
           {/* Description */}
           <div>

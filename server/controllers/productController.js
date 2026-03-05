@@ -94,3 +94,25 @@ export const updateProduct = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const uploadImages = async (req, res) => {
+  try {
+    if (!req.files || req.files.length === 0) {
+      return res.status(400).json({ message: "No files uploaded" });
+    }
+
+    // Cloudinary automatically 'path' mein URL save karta hai
+    const urls = req.files.map(file => file.path);
+
+    res.status(200).json({
+      success: true,
+      urls: urls,
+      message: "Images uploaded successfully to Cloudinary"
+    });
+  } catch (error) {
+    res.status(500).json({ 
+      success: false, 
+      message: error.message || "Upload failed" 
+    });
+  }
+};
