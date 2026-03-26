@@ -18,7 +18,8 @@ const allowedOrigins = [
   'http://localhost:5173',
   'https://damnjournals.vercel.app',
   'https://damnjournals.shop',
-  'https://damnjournals.com'
+  'https://damnjournals.com',
+  'https://www.damnjournals.com',
   
 ];
 
