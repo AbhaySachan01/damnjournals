@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ShoppingBag, Menu, X, User } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext'; // 1. AuthContext import kiya
+import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 const Navbar = () => {
   const { getCartCount } = useCart();
-  const { user, logout } = useAuth(); // 2. useAuth se user aur setUser nikala
+  const { user, logout } = useAuth(); 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   
@@ -16,7 +16,7 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Outside click logic (Same rahega)
+  // Outside click logic
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,15 +27,13 @@ const Navbar = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [dropdownRef]);
 
-  // Logout Logic: Context aur Storage dono clear karein
+  // Logout Logic
   const handleLogout = async () => {
     try {
       setShowDropdown(false);
-      
-      // 🔥 YAHAN APNA ASLI CONTEXT WALA LOGOUT CALL KAR 🔥
       await logout(); 
-      
       toast.success("Logged out successfully");
+      navigate('/'); // Optional: redirect to home after logout
     } catch (error) {
       toast.error("Logout failed");
     }
@@ -95,20 +93,19 @@ const Navbar = () => {
 
           <div className="lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 z-10 flex items-center gap-4 md:gap-6">
             
-            {/* --- USER PROFILE / GOOGLE AVATAR --- */}
+            {/* --- USER PROFILE AVATAR --- */}
             {user ? (
               <div className="relative" ref={dropdownRef}>
                 <button 
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="overflow-hidden w-9 h-9 md:w-10 md:h-10 rounded-full border-2 border-[#DAA520] transition-transform hover:scale-105 active:scale-95 flex items-center justify-center bg-[#2F4F4F] text-white"
                 >
-                  {/* Agar user.image hai toh photo dikhao, warna pehla letter */}
                   {user.image ? (
                     <img 
                       src={user.image} 
                       alt={user.name} 
                       className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer" // Google photos ke liye zaroori
+                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <span className="font-bold text-lg">{user.name.charAt(0).toUpperCase()}</span>
@@ -117,34 +114,56 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 {showDropdown && (
-                  <div className="absolute right-0 mt-3 w-48 bg-white shadow-2xl border border-gray-100 py-2 rounded-lg overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
+                  <div className="absolute right-0 mt-3 w-56 bg-white shadow-2xl border border-gray-100 py-2 rounded-lg overflow-hidden z-50 animate-in fade-in slide-in-from-top-2">
                     <div className="px-4 py-3 bg-gray-50 border-b border-gray-100">
                        <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mb-1 italic">Welcome back,</p>
                        <p className="text-sm font-bold text-[#2F4F4F] truncate">{user.name}</p>
                     </div>
 
+                    {/* 🔥 ADMIN OPTIONS 🔥 */}
+                    {/* Make sure this matches your DB logic (e.g. user.role === 'admin' OR user.isAdmin === true) */}
+                    {(user?.role === 'admin' || user?.isAdmin) && (
+                      <div className="border-b border-gray-100 bg-[#FFFAF0]">
+                        <Link 
+                          to="/admin/dashboard" 
+                          onClick={() => setShowDropdown(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#DAA520] hover:bg-gray-100 transition-colors font-bold uppercase tracking-wider border-b border-gray-100/50"
+                        >
+                          🎛️ Dashboard
+                        </Link>
+                        <Link 
+                          to="/admin/product" 
+                          onClick={() => setShowDropdown(false)}
+                          className="flex items-center gap-3 px-4 py-3 text-sm text-[#DAA520] hover:bg-gray-100 transition-colors font-bold uppercase tracking-wider"
+                        >
+                          📝 Products
+                        </Link>
+                      </div>
+                    )}
+
+                    {/* USER OPTIONS */}
                     <Link 
                         to="/profile" 
                         onClick={() => setShowDropdown(false)}
                         className="flex items-center gap-3 px-4 py-3 text-sm text-[#2F4F4F] hover:bg-gray-50 transition-colors font-bold uppercase tracking-wider border-b border-gray-100"
                       >
                         👤 My Profile
-                      </Link>
+                    </Link>
 
-                      <Link 
-                        to="/my-orders" 
-                        onClick={() => setShowDropdown(false)}
-                        className="flex items-center gap-3 px-4 py-3 text-sm text-[#2F4F4F] hover:bg-gray-50 transition-colors font-bold uppercase tracking-wider border-b border-gray-100"
-                      >
-                        📦 My Orders
-                      </Link>
+                    <Link 
+                      to="/my-orders" 
+                      onClick={() => setShowDropdown(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-sm text-[#2F4F4F] hover:bg-gray-50 transition-colors font-bold uppercase tracking-wider border-b border-gray-100"
+                    >
+                      📦 My Orders
+                    </Link>
 
-                      <button 
-                        onClick={handleLogout} 
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left text-red-600 hover:bg-red-50 transition-colors font-bold uppercase tracking-wider"
-                      >
-                        👋 Logout
-                      </button>
+                    <button 
+                      onClick={handleLogout} 
+                      className="w-full flex items-center gap-3 px-4 py-3 text-sm text-left text-red-600 hover:bg-red-50 transition-colors font-bold uppercase tracking-wider"
+                    >
+                      👋 Logout
+                    </button>
                   </div>
                 )}
               </div>
@@ -165,7 +184,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Desktop Links Row (Same) */}
+        {/* Desktop Links Row */}
         <div className="hidden lg:flex justify-center items-center mt-3 pt-2 w-full border-t border-current/10">
           <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-[11px] font-bold tracking-[0.15em] uppercase transition-all">
             {navLinks.map((link) => (
@@ -176,7 +195,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu (Same) */}
+        {/* Mobile Menu */}
         {isMenuOpen && (
           <div className={`lg:hidden flex flex-col items-center gap-6 py-8 mt-4 border-t h-screen ${isDarkNav ? 'bg-[#2F4F4F] border-gray-600' : 'bg-[#FFFAF0] border-gray-200'}`}>
             {navLinks.map((link) => (
